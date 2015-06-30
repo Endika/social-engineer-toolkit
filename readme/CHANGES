@@ -1,4 +1,70 @@
 ~~~~~~~~~~~~~~~~
+version 6.3.2
+~~~~~~~~~~~~~~~~
+
+* rewrote pyinjector and multipyinjector to evade sandbox technologies
+* added user + kernel debugger detection and automatic termination of payloads
+* bundled binaries in virtual machine containers for added detection resilience
+
+~~~~~~~~~~~~~~~~
+version 6.3.1
+~~~~~~~~~~~~~~~~
+
+* rewrote the solo payload generation into its own payload delivery that piggy backs the existing menu system
+* fixed an issue when creating the payload and listener options (option 6) would specify src was not found - this was due to a code cleanup project from versoin 6.3
+* rewrote the autorun to function accordingly with new solo
+* optimized and rewrote code base for payload creation - eliminated lots of old lines of code
+* rewrote autorun code and optimized to leverage solo and slimmed down code base
+* fixed an issue that would cause autorun to not work when relaunching
+* fixed an issue that would cause browser autopwn to use the old program_junk folder vs. /root/.set/ folder data
+* added \r\n\r\n returns to all msfconsoles - people get confused without having that extra enter in place thinking msfconsole is broke
+* added \r\n\r\n to all meta_config generations when using msfconsole -r for resource files
+
+~~~~~~~~~~~~~~~~
+version 6.3
+~~~~~~~~~~~~~~~~
+
+* removed old payloads that were no longer needed - pyinjector and multipyinjector to the job, standard meterpreter payloads all get picked up regardless of encoding
+* fixed an issue causing PDF templates from not being properly created when selecting solo
+* added ability for custom exe to properly execute when deploy binaries is still specified to OFF (it has to)
+* rewrote java applet to incorporate custom binary selection
+* added check to deploy binaries to auto select yes parameter 8 automatically 
+* removed disitools from SET - no longer needed in custom binary
+* removed legit binary, no longer needed
+* removed three config options no longer needed
+* defaulted the memory injection technique as the main method for old payloads
+* added additional obfuscation around AES generation and making sure static sigs cant hit it
+* stablized MSSQL bruter and injection through powershell
+* fixed webjacking that would cause the menu to bomb out if invalid responses
+* fixed an issue when importing a custom payload, it would try to kick off a listener which it shouldnt
+* added additional wording about when specifying a custom payload that you will need to create your own listener
+* added flag replacement variable for param name 8 which will indicate a randomized four alphanumeric for custom payload delivery - this will allow custom payloads to function properly without triggering powershell or other exploitation methods
+* added the ability for powershell to execute first and if successful then not drop binary stager as last resort
+* added a workaround for a metasploit bug that would cause bundle install issues when launching directly within the /opt/metasploit/apps/pro/msf3 directory or within the /usr/share/ framework directory. I first check for /usr/bin/msfconsole first and if there I do not append to the path variable in order to launch from anywhere
+* added ability to use default msfconsole launcher if applicable from any path instead of from home directory - fixed in psexec, powershell injection, java applet, custom payloads, etc.
+* randomized custom parameter name when deploying custom binaries to throw off static signatures
+
+~~~~~~~~~~~~~~~~
+version 6.2
+~~~~~~~~~~~~~~~~
+
+* changed IP address for the payload listener to specify LHOST
+* included TDS as a standard impacket library
+* added port to MSSQL display when compromising system
+* moved create_payloads in payloadgen to be compliant with msfvenom creation and moved off msfpayload and msfencode
+* fixed multiple files still using msfpayload or msfvenom
+* fixed a bug that caused a tds exceptions error when using the SQL attack (missing tds library)
+* updated specific wording in setoolkit launcher
+* slimmed powershell injection code to reduce injection code by about 17 bytes
+* completely randomized the java applet to the point where it will randomize the name, no longer uses Signed_Update.jar - there were signatures floating around that were detecting it based on static names
+* randomized and obfuscated pyinjector code base and locked into its own virtual container and debugger protection
+* randomized and obfuscated multi pyinjector code base and locked into its own virtual container and debugger protection
+* added the java applet to now smart detect if powershell is installed, if it is then it will not download an executable which could be used on detection capabilities. Powershell is plenty stable and should not require any deviations for a binary to be downloaded. 
+* added ability to check if certain paths are legitimate, if they are will deploy payloads via java applet
+* full msfvenom support and conversion off msfpayload msfencode
+* removed old call for impacket tds compatibility
+
+~~~~~~~~~~~~~~~~
 version 6.1.2
 ~~~~~~~~~~~~~~~~
 
