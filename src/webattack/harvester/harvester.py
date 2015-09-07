@@ -21,10 +21,12 @@ sys.path.append(definepath)
 
 from src.core.setcore import *
 
-from config.set_config import APACHE_SERVER as apache_check
-from config.set_config import WEBATTACK_EMAIL as webattack_email
-from config.set_config import TRACK_EMAIL_ADDRESSES as track_email
-from config.set_config import HARVESTER_LOG as logpath
+sys.path.append("/etc/setoolkit")
+from set_config import APACHE_SERVER as apache_check
+from set_config import WEBATTACK_EMAIL as webattack_email
+from set_config import TRACK_EMAIL_ADDRESSES as track_email
+from set_config import HARVESTER_LOG as logpath
+sys.path.append(definepath)
 
 if track_email == True:
     print_status("You have selected to track user accounts, Apache will automatically be turned on to handle tracking of users.")
@@ -73,7 +75,7 @@ except: import src.webattack.harvester.scraper
 
 # GRAB DEFAULT PORT FOR WEB SERVER AND CHECK FOR COMMAND CENTER
 command_center="off"
-fileopen=file("config/set_config" , "r").readlines()
+fileopen=file("/etc/setoolkit/set.config" , "r").readlines()
 counter=0
 for line in fileopen:
     line=line.rstrip()
@@ -114,7 +116,7 @@ if counter== 0: URL=''
 ssl_flag="false"
 self_signed="false"
 # SEE IF WE WANT TO USE SSL
-fileopen=file("config/set_config" , "r").readlines()
+fileopen=file("/etc/setoolkit/set.config" , "r").readlines()
 for line in fileopen:
     line=line.rstrip()
     match=re.search("WEBATTACK_SSL=ON", line)
@@ -429,6 +431,7 @@ def run():
         try:
 
             apache_dir = check_config("APACHE_DIRECTORY=")
+	    if os.path.isdir(apache_dir + "/html"): apache_dir = apache_dir + "/html"
             print bcolors.GREEN + "Apache webserver is set to ON. Copying over PHP file to the website."
         except Exception, e:
                 print e 

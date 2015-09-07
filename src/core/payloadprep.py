@@ -1,7 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 ############################################
-# Code behind the SET interactive shell
-# and RATTE
+# Code behind the SET interactive shell and RATTE
 ############################################
 import os
 import sys
@@ -18,7 +17,7 @@ sys.path.append(definepath)
 operating_system = check_os()
 
 # check the config file
-fileopen = file("config/set_config", "r")
+fileopen = file("/etc/setoolkit/set.config", "r")
 for line in fileopen:
     line = line.rstrip()
     # define if we use upx encoding or not

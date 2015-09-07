@@ -1,4 +1,84 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.6
+~~~~~~~~~~~~~~~~
+
+* fixed solo payload generation where listener would not launch properly 
+
+~~~~~~~~~~~~~~~~
+version 6.5.5
+~~~~~~~~~~~~~~~~
+
+* fixed automatic payload creation on pdf template where on Kali it would hang on waiting for payload
+
+~~~~~~~~~~~~~~~~
+version 6.5.4
+~~~~~~~~~~~~~~~~
+
+* fixed pdf template creation when using file format attack vector on option number one - was due to msfcli being removed - converted over to msfconsole
+* fixed using infectious media generator using pdf template
+* added automatic detection of /var/www/html or /var/www
+* added automatic path selection when using config file
+
+~~~~~~~~~~~~~~~~
+version 6.5.3
+~~~~~~~~~~~~~~~~
+
+* added automatic path detection for metasploit in SET and PTF
+
+~~~~~~~~~~~~~~~~
+version 6.5.2
+~~~~~~~~~~~~~~~~
+
+* added smallest payload option for msfvenom shellcode creation
+* added automatic start of apache on hta attack
+* fixed powershell teensy deployment
+
+~~~~~~~~~~~~~~~~
+version 6.5.1
+~~~~~~~~~~~~~~~~
+
+* changed meta_path to pull blank path when using Kali linux
+* changed msfvenom and msfconsole launching
+* added better check for fasttrack
+
+~~~~~~~~~~~~~~~~
+version 6.5
+~~~~~~~~~~~~~~~~
+
+* added brand new attack vector HTA attack and incorporated powershell injection into it
+* fixed a prompt that would cause double IP questions in certain attack vectors
+* slimmed down powershell injection http/https attack vectors in order to use in payload delivery
+* added exploit to browser attack Adobe Flash Player ByteArray Use After Free (2015-07-06)
+* added exploit to browser attack Adobe Flash Player Nellymoser Audio Decoding Buffer Overflow (2015-06-23)
+* added exploit to browser attack Adobe Flash Player Drawing Fill Shader Memory Corruption (2015-05-12)
+
+
+~~~~~~~~~~~~~~~~
+version 6.4.1
+~~~~~~~~~~~~~~~~
+
+* fixed config related issue in seautomate, seupdate, and msf payload generation
+* fixed an issue causing src to be undefined in infectious media generator
+
+~~~~~~~~~~~~~~~~
+version 6.4
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would cause 32-bit powershell injection from possibly not working
+* fixed an issue that would cause payloads to not fire when powershell injection occurs
+* restructured how bleeding edge is written initially and no longer overwrite sources.list
+* removed slim_set, was used for pwnie way back and is no longer needed
+* cleaned up an old mailing_list.txt format that is no longer needed
+* rehauled the config directories, no longer is there a config/ directory within the SET root directory, it is now under /etc/setoolkit/set.config
+* added dynamic import updates to /etc/setoolkit
+* factored config changes from git pull request to fix grammar and formatting
+* slimmed down powershell injection code by 32 bytes 
+* reworked config imports from harvester and cloner for the new config format
+* rewrote portions of powershell injection to incorporate and handle reverse_http and reverse_https
+* slimmed down powershell injection code more, and give two flag variables to shave shellcode off in order to support http/https payloads
+* fixed an import config error issue when using web harvester
+
+~~~~~~~~~~~~~~~~
 version 6.3.2
 ~~~~~~~~~~~~~~~~
 
