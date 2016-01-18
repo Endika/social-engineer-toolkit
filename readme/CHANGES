@@ -1,4 +1,28 @@
 ~~~~~~~~~~~~~~~~
+version 6.5.9
+~~~~~~~~~~~~~~~~
+
+* fixed a bug that was causing credential harvester to fail
+
+~~~~~~~~~~~~~~~~
+version 6.5.8
+~~~~~~~~~~~~~~~~
+
+* fixed an issue that would write out .setindex.html instead of copying to .set/index.html.
+* fixed an issue that would cause harvester log to not properly write out on certain systems.
+* fixed an issue that would cause the harvester log file to not write if path was /var/www/html
+* added to automatically check if Kali is in use - removes the old install and git clones in order to keep SET up to date
+* removed automatic SET update and put a warning that SET will be out of date using Kali-current vs bleeding edge
+
+~~~~~~~~~~~~~~~~
+version 6.5.7
+~~~~~~~~~~~~~~~~
+
+* fix chown issue on different platforms when using harvester (pull request)
+* fixed an issue when moving to /etc/setoolkit/set.config would throw exception when using teensy attack vectors, now fixed
+* fixed an issue which would cause msf.exe to not be found when using dll hijacking
+
+~~~~~~~~~~~~~~~~
 version 6.5.6
 ~~~~~~~~~~~~~~~~
 
@@ -1114,7 +1138,7 @@ version 3.6
 * added Adobe Flash Player Object Type Confusion to the web interface
 * fixed a menu bug that would not allow you to return to the previous menu in the java applet
 * fixed a bug that would cause the multiattack metasploit, java applet, and cred harvester to not work on the right ports and raise a exceptions
-* added background listener to credential harvester and multiattack -- allows credential harvester to continue to run even if metapsloit has been exited
+* added background listener to credential harvester and multiattack -- allows credential harvester to continue to run even if metasploit has been exited
 * fixed a bug that would still flag any website as cloned successfully. The new code fixes that by checking to ensure the site was properly cloned.
 * fixed a cloning web bug that would error out then continue with payload selection
 * added a cleanup routine to the web cloner for post completion on the cloner, this fixes a repetitive issue when launching multiple attacks in the menu system
